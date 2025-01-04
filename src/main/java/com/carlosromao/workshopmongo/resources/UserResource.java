@@ -18,6 +18,8 @@ import com.carlosromao.workshopmongo.dto.UserDTO;
 import com.carlosromao.workshopmongo.services.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping(value="/users")
@@ -53,4 +55,11 @@ public class UserResource {
 		return ResponseEntity.noContent().build();
 	}
 
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Void> update(@PathVariable String id, @RequestBody UserDTO objDto) {
+		User obj = service.fromDTO(objDto);
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
 }
